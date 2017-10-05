@@ -1,24 +1,25 @@
-project.name = openresty
-project.version = 1.11.2.3
-project.vendor = openresty.org
-project.homepage = http://openresty.org/
-project.groups = dev/sys-srv
-project.description = Dynamic web platform based on NGINX and LuaJIT
+[project]
+name = openresty
+version = 1.11.2.5
+vendor = openresty.org
+homepage = http://openresty.org/
+groups = dev/sys-srv
+description = Dynamic web platform based on NGINX and LuaJIT
 
 %build
 
 PREFIX="{{.project__prefix}}"
 
-cd {{.lospack__pack_dir}}/deps
+cd {{.inpack__pack_dir}}/deps
 
-if [ ! -f "openresty-1.11.2.3.tar.gz" ]; then
-    wget https://openresty.org/download/openresty-1.11.2.3.tar.gz
+if [ ! -f "openresty-{{.project__version}}.tar.gz" ]; then
+    wget https://openresty.org/download/openresty-{{.project__version}}.tar.gz
 fi
 
-if [ -d "openresty-1.11.2.3" ]; then
-    rm -rf openresty-1.11.2.3
+if [ -d "openresty-{{.project__version}}" ]; then
+    rm -rf openresty-{{.project__version}}
 fi
-tar -zxf openresty-1.11.2.3.tar.gz
+tar -zxf openresty-{{.project__version}}.tar.gz
 
 
 if [ ! -f "openssl-1.0.2k.tar.gz" ]; then
@@ -30,7 +31,7 @@ if [ -d "openssl-1.0.2k" ]; then
 fi
 tar -zxf openssl-1.0.2k.tar.gz
 cd openssl-1.0.2k
-patch -p1 < ../openresty-1.11.2.3/patches/openssl-1.0.2h-sess_set_get_cb_yield.patch
+patch -p1 < ../openresty-{{.project__version}}/patches/openssl-1.0.2h-sess_set_get_cb_yield.patch
 cd ..
 
 
@@ -44,7 +45,7 @@ fi
 tar -zxf pcre-8.40.tar.gz
 
 
-cd openresty-1.11.2.3
+cd openresty-{{.project__version}}
 ./configure \
     --user=action \
     --group=action \
@@ -106,7 +107,7 @@ cp -rp $des_tmp/$PREFIX/conf/*         {{.buildroot}}/conf/
 rm -f  {{.buildroot}}/conf/*.default
 
 
-cd {{.lospack__pack_dir}}
+cd {{.inpack__pack_dir}}
 cp -rp misc/nginx.conf.tpl             {{.buildroot}}/conf/nginx.conf
 
 sed -i 's/{\[worker_processes\]}/1/g'             {{.buildroot}}/conf/nginx.conf
@@ -118,8 +119,8 @@ install misc/index.html {{.buildroot}}/nginx/html/index.html
 install misc/50x.html   {{.buildroot}}/nginx/html/50x.html
 install misc/404.html   {{.buildroot}}/nginx/html/404.html
 
-cd {{.lospack__pack_dir}}/deps
-rm -rf openresty-1.11.2.3
+cd {{.inpack__pack_dir}}/deps
+rm -rf openresty-{{.project__version}}
 rm -rf openssl-1.0.2k
 rm -rf pcre-8.40
 
