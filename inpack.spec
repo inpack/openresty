@@ -1,6 +1,6 @@
 [project]
 name = openresty
-version = 1.11.2.5
+version = 1.13.6.1
 vendor = openresty.org
 homepage = http://openresty.org/
 groups = dev/sys-srv
