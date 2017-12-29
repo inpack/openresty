@@ -12,33 +12,19 @@ PREFIX="{{.project__prefix}}"
 
 cd {{.inpack__pack_dir}}/deps
 
+
 if [ ! -f "openresty-{{.project__version}}.tar.gz" ]; then
     wget https://openresty.org/download/openresty-{{.project__version}}.tar.gz
 fi
-
 if [ -d "openresty-{{.project__version}}" ]; then
     rm -rf openresty-{{.project__version}}
 fi
 tar -zxf openresty-{{.project__version}}.tar.gz
 
 
-if [ ! -f "openssl-1.0.2k.tar.gz" ]; then
-    wget https://www.openssl.org/source/openssl-1.0.2k.tar.gz
-fi
-
-if [ -d "openssl-1.0.2k" ]; then
-    rm -rf openssl-1.0.2k
-fi
-tar -zxf openssl-1.0.2k.tar.gz
-cd openssl-1.0.2k
-patch -p1 < ../openresty-{{.project__version}}/patches/openssl-1.0.2h-sess_set_get_cb_yield.patch
-cd ..
-
-
 if [ ! -f "pcre-8.40.tar.gz" ]; then
     wget https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz
 fi
-
 if [ -d "pcre-8.40" ]; then
     rm -rf pcre-8.40
 fi
@@ -78,7 +64,6 @@ cd openresty-{{.project__version}}
     --error-log-path=$PREFIX/var/log/openresty.error.log \
     --with-luajit-xcflags='-DLUAJIT_ENABLE_LUA52COMPAT' \
     --pid-path=$PREFIX/var/run.openresty.pid \
-    --with-openssl=../openssl-1.0.2k \
     --with-pcre=../pcre-8.40 \
     -j2
 
@@ -121,7 +106,6 @@ install misc/404.html   {{.buildroot}}/nginx/html/404.html
 
 cd {{.inpack__pack_dir}}/deps
 rm -rf openresty-{{.project__version}}
-rm -rf openssl-1.0.2k
 rm -rf pcre-8.40
 
 %files
