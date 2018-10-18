@@ -20,7 +20,7 @@ http {
     gzip_types text/plain;
     gzip_types text/css text/javascript application/x-javascript;
     gzip_types text/xml application/xml application/xml+rss application/json;
-    gzip_types image/jpeg image/gif image/png;
+    gzip_types image/jpeg image/gif image/png image/svg+xml;
 
     server {
         listen       8080;
