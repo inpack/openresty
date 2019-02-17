@@ -23,19 +23,19 @@ http {
     gzip_types image/jpeg image/gif image/png image/svg+xml;
 
     server {
-        listen       8080;
-        server_name  localhost;
+        listen      8080;
+        server_name localhost;
 
         location / {
-            root   /home/action/apps/openresty/nginx/html;
-            index  index.html index.htm;
+            root  /home/action/apps/openresty/nginx/html;
+            index index.html index.htm;
         }
 
-        error_page  404              /404.html;
-        error_page   500 502 503 504 /50x.html;
+        error_page 404             /404.html;
+        error_page 500 502 503 504 /50x.html;
         
         location = /50x.html {
-            root   /home/action/apps/openresty/nginx/html;
+            root /home/action/apps/openresty/nginx/html;
         }
     }
 
