@@ -8,7 +8,7 @@ description = Dynamic web platform based on NGINX and LuaJIT
 
 %build
 
-PREFIX="{{.project__prefix}}"
+PREFIX="/opt/openresty/openresty"
 
 cd {{.inpack__pack_dir}}/deps
 

@@ -1,2 +1,3 @@
 *.rpm
 .build_bin
+*.txz

@@ -1,14 +1,15 @@
 
-worker_processes {[worker_processes]};
+worker_processes auto;
+worker_cpu_affinity auto;
 
-error_log /home/action/apps/openresty/var/log/openresty.error.log;
+error_log /opt/openresty/openresty/var/log/openresty.error.log;
 
 events {
     worker_connections {[events_worker_connections]};
 }
 
 http {
-    include           /home/action/apps/openresty/conf/mime.types;
+    include           /opt/openresty/openresty/conf/mime.types;
     default_type      application/octet-stream;    
     sendfile          on;
     keepalive_timeout 65;
@@ -27,7 +28,7 @@ http {
         server_name localhost;
 
         location / {
-            root  /home/action/apps/openresty/nginx/html;
+            root  /opt/openresty/openresty/nginx/html;
             index index.html index.htm;
         }
 
@@ -35,9 +36,9 @@ http {
         error_page 500 502 503 504 /50x.html;
         
         location = /50x.html {
-            root /home/action/apps/openresty/nginx/html;
+            root /opt/openresty/openresty/nginx/html;
         }
     }
 
-    include /home/action/apps/openresty/conf/conf.d/*.conf;
+    include /opt/openresty/openresty/conf/conf.d/*.conf;
 }
