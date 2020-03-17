@@ -19,8 +19,10 @@ http {
 
     gzip on;
     gzip_types text/plain;
-    gzip_types text/css text/javascript application/x-javascript;
-    gzip_types text/xml application/xml application/xml+rss application/json;
+    gzip_types text/css;
+    gzip_types text/javascript application/javascript application/x-javascript;
+    gzip_types application/json;
+    gzip_types text/xml application/xml application/xml+rss;
     gzip_types image/jpeg image/gif image/png image/svg+xml;
 
     server {
