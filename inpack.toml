@@ -1,6 +1,6 @@
 [project]
 name = "openresty"
-version = "1.15.8.3"
+version = "1.17.8.2"
 vendor = "openresty.org"
 homepage = "http://openresty.org/"
 description = "Dynamic web platform based on NGINX and LuaJIT"
@@ -18,13 +18,13 @@ if [ -d \"openresty-{{.project__version}}\" ]; then
     rm -rf openresty-{{.project__version}}
 fi
 tar -zxf openresty-{{.project__version}}.tar.gz
-if [ ! -f \"pcre-8.40.tar.gz\" ]; then
-    wget https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz
+if [ ! -f \"pcre-8.44.tar.gz\" ]; then
+    wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.gz
 fi
-if [ -d \"pcre-8.40\" ]; then
-    rm -rf pcre-8.40
+if [ -d \"pcre-8.44\" ]; then
+    rm -rf pcre-8.44
 fi
-tar -zxf pcre-8.40.tar.gz
+tar -zxf pcre-8.44.tar.gz
 cd openresty-{{.project__version}}
 ./configure \
     --user=action \
@@ -58,7 +58,7 @@ cd openresty-{{.project__version}}
     --error-log-path=$PREFIX/var/log/openresty.error.log \
     --with-luajit-xcflags='-DLUAJIT_ENABLE_LUA52COMPAT' \
     --pid-path=$PREFIX/var/run.openresty.pid \
-    --with-pcre=../pcre-8.40 \
+    --with-pcre=../pcre-8.44 \
     -j2
 make -j2
 des_tmp=/tmp/openresty_build_tmp
@@ -88,5 +88,5 @@ install misc/50x.html   {{.buildroot}}/nginx/html/50x.html
 install misc/404.html   {{.buildroot}}/nginx/html/404.html
 cd {{.inpack__pack_dir}}/deps
 rm -rf openresty-{{.project__version}}
-rm -rf pcre-8.40
+rm -rf pcre-8.44
 """
