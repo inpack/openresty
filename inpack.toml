@@ -1,6 +1,6 @@
 [project]
 name = "openresty"
-version = "1.17.8.2"
+version = "1.19.3.1"
 vendor = "openresty.org"
 homepage = "http://openresty.org/"
 description = "Dynamic web platform based on NGINX and LuaJIT"
@@ -11,6 +11,7 @@ groups = ["dev/sys-srv"]
 [scripts]
 build = """PREFIX=\"/opt/openresty/openresty\"
 cd {{.inpack__pack_dir}}/deps
+
 if [ ! -f \"openresty-{{.project__version}}.tar.gz\" ]; then
     wget https://openresty.org/download/openresty-{{.project__version}}.tar.gz
 fi
@@ -18,6 +19,7 @@ if [ -d \"openresty-{{.project__version}}\" ]; then
     rm -rf openresty-{{.project__version}}
 fi
 tar -zxf openresty-{{.project__version}}.tar.gz
+
 if [ ! -f \"pcre-8.44.tar.gz\" ]; then
     wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.gz
 fi
@@ -25,30 +27,44 @@ if [ -d \"pcre-8.44\" ]; then
     rm -rf pcre-8.44
 fi
 tar -zxf pcre-8.44.tar.gz
+
+##  if [ ! -f \"openssl-1.1.1h.tar.gz\" ]; then
+##      wget https://www.openssl.org/source/openssl-1.1.1h.tar.gz
+##  fi
+##  if [ -d \"openssl-1.1.1h\" ]; then
+##      rm -fr openssl-1.1.1h
+##  fi
+##  tar -zxf openssl-1.1.1h.tar.gz
+
 cd openresty-{{.project__version}}
 ./configure \
     --user=action \
     --group=action \
+    --with-compat \
     --with-pcre-jit \
     --with-luajit \
-    --with-stream \
-    --with-stream_ssl_module \
-    --with-http_v2_module \
     --without-mail_pop3_module \
     --without-mail_imap_module \
     --without-mail_smtp_module \
-    --with-http_stub_status_module \
     --with-http_realip_module \
     --with-http_addition_module \
     --with-http_auth_request_module \
     --with-http_secure_link_module \
     --with-http_random_index_module \
+    --with-http_gunzip_module \
     --with-http_gzip_static_module \
     --with-http_sub_module \
     --with-http_dav_module \
     --with-http_flv_module \
     --with-http_mp4_module \
-    --with-http_gunzip_module \
+    --with-http_ssl_module \
+    --with-http_stub_status_module \
+    --with-http_sub_module \
+    --with-http_v2_module \
+    --with-stream \
+    --with-stream_ssl_module \
+    --with-stream_ssl_preread_module \
+    --with-stream_realip_module \
     --with-threads \
     --with-file-aio \
     --prefix=$PREFIX \
@@ -60,6 +76,8 @@ cd openresty-{{.project__version}}
     --pid-path=$PREFIX/var/run.openresty.pid \
     --with-pcre=../pcre-8.44 \
     -j2
+## --with-openssl=../openssl-1.1.1h \
+
 make -j2
 des_tmp=/tmp/openresty_build_tmp
 mkdir -p $des_tmp

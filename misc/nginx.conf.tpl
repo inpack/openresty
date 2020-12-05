@@ -25,6 +25,11 @@ http {
     gzip_types text/xml application/xml application/xml+rss;
     gzip_types image/jpeg image/gif image/png image/svg+xml;
 
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+    }
+
     server {
         listen      8080;
         server_name localhost;
