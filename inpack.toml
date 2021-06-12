@@ -1,6 +1,6 @@
 [project]
 name = "openresty"
-version = "1.19.3.1"
+version = "1.19.3.2"
 vendor = "openresty.org"
 homepage = "http://openresty.org/"
 description = "Dynamic web platform based on NGINX and LuaJIT"
